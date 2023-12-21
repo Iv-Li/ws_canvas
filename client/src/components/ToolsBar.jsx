@@ -1,4 +1,4 @@
-import { Stack, Button, Container } from 'react-bootstrap'
+import { Stack, Button } from 'react-bootstrap'
 import BrushImg from 'src/assets/brush.svg?react'
 import RectImg from 'src/assets/rect.svg?react'
 import CircleImg from 'src/assets/circle.svg?react'
@@ -7,11 +7,15 @@ import ColourImg from 'src/assets/colour.svg?react'
 import UndoImg from 'src/assets/undo.svg?react'
 import RedoImg from 'src/assets/redo.svg?react'
 import SaveImg from 'src/assets/save.svg?react'
+import { observer } from "mobx-react-lite";
+import { useStoreContext } from "src/hooks/indes.js";
+import { Brush } from "src/tools"
 
-const ToolsBar = () => {
+const ToolsBar = observer(() => {
+  const { canvas, tool } = useStoreContext()
   return (
     <Stack direction="horizontal" gap={3} className="shadow p-2 bg-white">
-      <Button variant="light"><BrushImg /></Button>
+      <Button variant="light" onClick={() => tool.setTool(new Brush(canvas.canvas))}><BrushImg /></Button>
       <Button variant="light"><RectImg /></Button>
       <Button variant="light"><CircleImg /></Button>
       <Button variant="light"><EraserImg /></Button>
@@ -21,6 +25,6 @@ const ToolsBar = () => {
       <Button variant="light"><SaveImg /></Button>
     </Stack>
   )
-}
+})
 
 export default ToolsBar
