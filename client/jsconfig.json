@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["src/*"],
+      "~bootstrap/*": ["node_modules/bootstrap/*"]
+    }
+  }
+}
