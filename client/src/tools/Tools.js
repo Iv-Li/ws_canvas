@@ -2,10 +2,8 @@ class Tools {
   constructor(canvas) {
     this.canvas = canvas
     this.ctx = this.canvas.getContext('2d')
-    this.defaultColor = '#000'
 
     this.destroy()
-    this.setDefault()
   }
 
   getMousePositionRelativeToElement(e) {
@@ -22,9 +20,16 @@ class Tools {
     this.canvas.onmousemove = null
   }
 
-  setDefault() {
-    this.ctx.strokeStyle = this.defaultColor
-    this.ctx.fillStyle = this.defaultColor
+  set fillColor(color) {
+    this.ctx.fillStyle = color
+  }
+
+  set strokeColor(color) {
+    this.ctx.strokeStyle = color
+  }
+
+  set lineWidth(width) {
+    this.ctx.lineWidth = width
   }
 }
 
