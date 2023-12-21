@@ -3,11 +3,13 @@ import Brush from "src/tools/Brush.js";
 import Rect from "src/tools/Rect.js";
 import Circle from "src/tools/Circle.js";
 import Eraser from "src/tools/Eraser.js";
+import Line from "src/tools/Line.js";
 
 export {
   Tools,
   Brush,
   Rect,
   Circle,
-  Eraser
+  Eraser,
+  Line
 }
