@@ -9,14 +9,14 @@ import RedoImg from 'src/assets/redo.svg?react'
 import SaveImg from 'src/assets/save.svg?react'
 import { observer } from "mobx-react-lite";
 import { useStoreContext } from "src/hooks/indes.js";
-import { Brush } from "src/tools"
+import { Brush, Rect } from "src/tools"
 
 const ToolsBar = observer(() => {
   const { canvas, tool } = useStoreContext()
   return (
     <Stack direction="horizontal" gap={3} className="shadow p-2 bg-white">
       <Button variant="light" onClick={() => tool.setTool(new Brush(canvas.canvas))}><BrushImg /></Button>
-      <Button variant="light"><RectImg /></Button>
+      <Button variant="light" onClick={() => tool.setTool(new Rect(canvas.canvas))}><RectImg /></Button>
       <Button variant="light"><CircleImg /></Button>
       <Button variant="light"><EraserImg /></Button>
       <Button variant="light" ><ColourImg /></Button>

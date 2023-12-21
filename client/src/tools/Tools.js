@@ -10,7 +10,7 @@ class Tools {
     const x = (e.clientX - rect.left) * (e.target.width / rect.width);
     const y = (e.clientY - rect.top) * (e.target.height / rect.height);
 
-    return { offsetX: x, offsetY: y, rect };
+    return { offsetX: x, offsetY: y };
   }
 
   destroy() {
