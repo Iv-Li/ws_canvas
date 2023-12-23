@@ -12,9 +12,14 @@ const Canvas = observer(() => {
     canvasContext.setCanvas(ref.current)
     tool.setTool(new Brush(ref.current))
   }, []);
+
+  const onMouseDown = () => {
+    canvasContext.pushToUndoList(canvasContext.canvas.toDataURL())
+  }
+
   return (
     <Container className="vh-100 position-relative">
-      <canvas ref={ref}>Canvas</canvas>
+      <canvas ref={ref} onMouseDown={onMouseDown}>Canvas</canvas>
     </Container>
   );
 });

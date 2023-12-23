@@ -22,8 +22,8 @@ const ToolsBar = observer(() => {
       <Button variant="light" onClick={() => tool.setTool(new Eraser(canvas.canvas))}><EraserImg /></Button>
       <Button variant="light" onClick={() => tool.setTool(new Line(canvas.canvas))}><LineImg /></Button>
       <Button variant="light" ><ColourImg /></Button>
-      <Button variant="light" className="ms-auto"><UndoImg /></Button>
-      <Button variant="light"><RedoImg /></Button>
+      <Button variant="light" className="ms-auto" onClick={() => canvas.undo()}><UndoImg /></Button>
+      <Button variant="light"  onClick={() => canvas.redo()}><RedoImg /></Button>
       <Button variant="light"><SaveImg /></Button>
     </Stack>
   )
