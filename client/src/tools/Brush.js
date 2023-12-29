@@ -43,14 +43,16 @@ class Brush extends Tools {
         figure: {
           type: BRUSH,
           x: offsetX,
-          y: offsetY
+          y: offsetY,
+          color: this.ctx.strokeStyle
         }
       }))
     }
   }
 
-  static draw(ctx, x, y){
+  static draw(ctx, x, y, color){
     ctx.lineTo(x, y)
+    ctx.strokeStyle = color
     ctx.stroke()
   }
 }

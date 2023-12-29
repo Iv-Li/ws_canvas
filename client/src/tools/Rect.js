@@ -34,7 +34,8 @@ class Rect extends Tools {
         x: this.startX,
         y: this.startY,
         width: this.width,
-        height: this.height
+        height: this.height,
+        color: this.ctx.fillStyle
       }
     }))
   }
@@ -60,9 +61,10 @@ class Rect extends Tools {
     }
   }
 
-  static staticDraw(ctx, x, y, w, h) {
+  static staticDraw(ctx, x, y, w, h, color) {
     ctx.beginPath()
     ctx.rect(x, y, w, h)
+    ctx.fillStyle = color
     ctx.fill()
     ctx.stroke()
   }

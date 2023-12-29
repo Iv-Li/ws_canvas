@@ -45,15 +45,16 @@ const Canvas = observer(() => {
   }, [canvasContext.userName]);
 
   const draw = (data) => {
+    console.log(data)
     const figure = data.figure.type
     const ctx = canvasContext.canvas.getContext('2d')
     switch (figure) {
       case BRUSH:
-        Brush.draw(ctx, data.figure.x, data.figure.y)
+        Brush.draw(ctx, data.figure.x, data.figure.y, data.figure.color)
         break;
       case RECT:
-        const { x, y, width, height } = data.figure
-        Rect.staticDraw(ctx, x, y, width, height)
+        const { x, y, width, height, color } = data.figure
+        Rect.staticDraw(ctx, x, y, width, height, color)
         break;
       case FINISH:
         ctx.beginPath()
