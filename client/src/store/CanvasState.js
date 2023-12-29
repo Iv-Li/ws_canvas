@@ -4,6 +4,9 @@ class CanvasState {
   _canvas = null
   _undoList = []
   _redoList = []
+  _username = ''
+  _socket = null
+  _sessionId = null
 
   constructor() {
     makeAutoObservable(this)
@@ -17,12 +20,35 @@ class CanvasState {
     return this._canvas
   }
 
+  setUserName(name) {
+    this._username = name
+  }
+
+  get userName() {
+    return this._username
+  }
+
+  setSocket(socket) {
+    this._socket = socket
+  }
+
+  get socket() {
+    return this._socket
+  }
+
+  setSessionId(id) {
+    this._sessionId = id
+  }
+
+  get sessionId() {
+    return this._sessionId
+  }
+
   pushToUndoList(view) {
     this._undoList.push(view)
   }
 
   updateCanvasView(ctx, imgUrl) {
-    console.log("updateCanvasView")
     const img = new Image()
     img.src = imgUrl
     img.onload = () => {

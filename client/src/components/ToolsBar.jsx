@@ -13,14 +13,14 @@ import { useStoreContext } from "src/hooks/indes.js";
 import { Brush, Rect, Circle, Eraser, Line } from "src/tools"
 
 const ToolsBar = observer(() => {
-  const { canvas, tool } = useStoreContext()
+  const { canvas: { canvas, id, socket}, tool } = useStoreContext()
   return (
     <Stack direction="horizontal" gap={3} className="shadow p-2 bg-white">
-      <Button variant="light" onClick={() => tool.setTool(new Brush(canvas.canvas))}><BrushImg /></Button>
-      <Button variant="light" onClick={() => tool.setTool(new Rect(canvas.canvas))}><RectImg /></Button>
-      <Button variant="light" onClick={() => tool.setTool(new Circle(canvas.canvas))}><CircleImg /></Button>
-      <Button variant="light" onClick={() => tool.setTool(new Eraser(canvas.canvas))}><EraserImg /></Button>
-      <Button variant="light" onClick={() => tool.setTool(new Line(canvas.canvas))}><LineImg /></Button>
+      <Button variant="light" onClick={() => tool.setTool(new Brush(canvas, socket, id))}><BrushImg /></Button>
+      <Button variant="light" onClick={() => tool.setTool(new Rect(canvas, socket, id))}><RectImg /></Button>
+      <Button variant="light" onClick={() => tool.setTool(new Circle(canvas, socket, id))}><CircleImg /></Button>
+      <Button variant="light" onClick={() => tool.setTool(new Eraser(canvas, socket, id))}><EraserImg /></Button>
+      <Button variant="light" onClick={() => tool.setTool(new Line(canvas, socket, id))}><LineImg /></Button>
       <Button variant="light" ><ColourImg /></Button>
       <Button variant="light" className="ms-auto" onClick={() => canvas.undo()}><UndoImg /></Button>
       <Button variant="light"  onClick={() => canvas.redo()}><RedoImg /></Button>

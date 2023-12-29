@@ -11,12 +11,14 @@ const wssClients = wss.getWss()
 const PORT = process.env.PORT || 5000
 app.ws('/', function (ws, req){
   ws.on('message', function (msg) {
-    switch (msg.method) {
+    const parsedMsg = JSON.parse(msg);
+
+    switch (parsedMsg.method) {
       case CONNECTION:
-        connectUser({ ws, clients: wssClients.clients, msg })
+        connectUser({ ws, clients: wssClients.clients, msg: parsedMsg })
         break;
       case DRAW:
-        broadcasting({ ws, clients: wssClients.clients, msg })
+        broadcasting({ clients: wssClients.clients, msg: parsedMsg })
         break;
     }
   })

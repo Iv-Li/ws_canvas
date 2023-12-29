@@ -1,6 +1,8 @@
 import { makeAutoObservable } from "mobx";
 class ToolState {
   _tool = null
+  _socket = null
+  _id = null
 
   constructor() {
     makeAutoObservable(this)
@@ -16,7 +18,6 @@ class ToolState {
 
   setFillColor(color) {
     this._tool.fillColor = color
-    console.log(this._tool)
   }
 
   setStrokeColor(color) {

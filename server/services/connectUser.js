@@ -1,7 +1,8 @@
-const broadcasting = require('broadcastiong')
+const broadcasting = require('./broadcasting')
 
 const connectUser = ({ ws, clients, msg }) => {
-  broadcasting({ ws, clients, msg: msg.name })
+  ws.id = msg.id
+  broadcasting({ clients, msg: msg.name })
 }
 
 module.exports = connectUser

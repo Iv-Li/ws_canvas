@@ -1,7 +1,10 @@
 class Tools {
-  constructor(canvas) {
+
+  constructor(canvas, socket, id) {
     this.canvas = canvas
     this.ctx = this.canvas.getContext('2d')
+    this.socket = socket
+    this.id = id
 
     this.destroy()
   }

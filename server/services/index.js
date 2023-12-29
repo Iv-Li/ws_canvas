@@ -1,5 +1,5 @@
-const broadcasting = require('broadcastiong')
-const connectUser = require('connectUser')
+const broadcasting = require('./broadcasting')
+const connectUser = require('./connectUser')
 
 module.exports = {
   broadcasting,

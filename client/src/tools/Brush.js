@@ -1,8 +1,10 @@
 import { Tools } from "src/tools/index.js";
+import { DRAW } from "src/consts/methodConsts.js";
+import { BRUSH, FINISH } from "src/consts/drawConsts.js";
 
 class Brush extends Tools {
-  constructor(canvas) {
-    super(canvas)
+  constructor(canvas, socket, id) {
+    super(canvas, socket, id)
     this.listen()
   }
 
@@ -21,18 +23,35 @@ class Brush extends Tools {
 
   onMouseUp(e) {
     this.mouseDown = false
+
+    this.socket.send(JSON.stringify({
+      method: DRAW,
+      id: this.id,
+      figure: {
+        type: FINISH,
+      }
+    }))
   }
 
   onMouseMove(e) {
     if (this.mouseDown) {
       const {offsetX, offsetY } = this.getMousePositionRelativeToElement(e)
-      this.draw(offsetX, offsetY)
+      //this.draw(offsetX, offsetY)
+      this.socket.send(JSON.stringify({
+        method: DRAW,
+        id: this.id,
+        figure: {
+          type: BRUSH,
+          x: offsetX,
+          y: offsetY
+        }
+      }))
     }
   }
 
-  draw(x, y){
-    this.ctx.lineTo(x, y)
-    this.ctx.stroke()
+  static draw(ctx, x, y){
+    ctx.lineTo(x, y)
+    ctx.stroke()
   }
 }
 
