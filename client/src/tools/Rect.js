@@ -1,8 +1,10 @@
 import { Tools } from "src/tools/index.js";
+import { DRAW } from "src/consts/methodConsts.js";
+import { RECT } from "src/consts/drawConsts.js";
 
 class Rect extends Tools {
-  constructor(canvas) {
-    super(canvas);
+  constructor(canvas, socket, id) {
+    super(canvas, socket, id);
 
     this.listen()
   }
@@ -23,14 +25,26 @@ class Rect extends Tools {
 
   onMouseUp() {
     this.mouseDown = false
+
+    this.socket.send(JSON.stringify({
+      method: DRAW,
+      id: this.id,
+      figure: {
+        type: RECT,
+        x: this.startX,
+        y: this.startY,
+        width: this.width,
+        height: this.height
+      }
+    }))
   }
 
   onMouseMove(e) {
     if (!this.mouseDown) return
     const { offsetX, offsetY} = this.getMousePositionRelativeToElement(e)
-    const w = offsetX - this.startX
-    const h = offsetY - this.startY
-    this.draw(this.startX, this.startY, w, h)
+    this.width = offsetX - this.startX
+    this.height = offsetY - this.startY
+    this.draw(this.startX, this.startY, this.width, this.height)
   }
 
   draw(x, y, w, h) {
@@ -44,6 +58,13 @@ class Rect extends Tools {
       this.ctx.fill()
       this.ctx.stroke()
     }
+  }
+
+  static staticDraw(ctx, x, y, w, h) {
+    ctx.beginPath()
+    ctx.rect(x, y, w, h)
+    ctx.fill()
+    ctx.stroke()
   }
 }
 

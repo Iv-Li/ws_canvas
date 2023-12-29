@@ -2,11 +2,11 @@ import { Container } from "react-bootstrap";
 import { observer } from "mobx-react-lite";
 import { useEffect, useRef } from "react";
 import { useStoreContext } from "src/hooks/indes.js";
-import { Brush } from "src/tools/index.js";
+import { Brush, Rect } from "src/tools/index.js";
 import initializeWebSocket from "src/api/ws.js";
 import { CONNECTION, DRAW } from "src/consts/methodConsts.js";
 import { useParams } from "react-router-dom";
-import { BRUSH, FINISH } from "src/consts/drawConsts.js";
+import { BRUSH, FINISH, RECT } from "src/consts/drawConsts.js";
 
 const Canvas = observer(() => {
   const ref = useRef()
@@ -50,6 +50,10 @@ const Canvas = observer(() => {
     switch (figure) {
       case BRUSH:
         Brush.draw(ctx, data.figure.x, data.figure.y)
+        break;
+      case RECT:
+        const { x, y, width, height } = data.figure
+        Rect.staticDraw(ctx, x, y, width, height)
         break;
       case FINISH:
         ctx.beginPath()
