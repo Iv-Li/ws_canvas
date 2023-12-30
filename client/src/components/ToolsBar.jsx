@@ -14,7 +14,18 @@ import { Brush, Rect, Circle, Eraser, Line } from "src/tools"
 
 const ToolsBar = observer(() => {
   const { canvas: { canvas, sessionId, socket}, tool } = useStoreContext()
-  console.log({ canvas, sessionId, socket})
+
+  const downloadImg = () => {
+    const dataUrl = canvas.toDataURL()
+
+    const a = document.createElement("a")
+    a.href = dataUrl
+    a.download = sessionId +".jpeg"
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+  }
+
   return (
     <Stack direction="horizontal" gap={3} className="shadow p-2 bg-white">
       <Button variant="light" onClick={() => tool.setTool(new Brush(canvas, socket, sessionId))}><BrushImg /></Button>
@@ -25,7 +36,7 @@ const ToolsBar = observer(() => {
       <Button variant="light" ><ColourImg /></Button>
       <Button variant="light" className="ms-auto" onClick={() => canvas.undo()}><UndoImg /></Button>
       <Button variant="light"  onClick={() => canvas.redo()}><RedoImg /></Button>
-      <Button variant="light"><SaveImg /></Button>
+      <Button variant="light" onClick={downloadImg}><SaveImg /></Button>
     </Stack>
   )
 })

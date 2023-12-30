@@ -7,6 +7,8 @@ import initializeWebSocket from "src/api/ws.js";
 import { CONNECTION, DRAW } from "src/consts/methodConsts.js";
 import { useParams } from "react-router-dom";
 import { BRUSH, FINISH, RECT } from "src/consts/drawConsts.js";
+import { axiosInstance } from "src/config/axios.js";
+import axios from "axios";
 
 const Canvas = observer(() => {
   const ref = useRef()
@@ -15,6 +17,7 @@ const Canvas = observer(() => {
 
   useEffect(() => {
     canvasContext.setCanvas(ref.current)
+    getStartImg()
   }, []);
 
   useEffect(() => {
@@ -28,7 +31,7 @@ const Canvas = observer(() => {
       canvasContext.setSocket(socket)
       canvasContext.setSessionId(params.id)
       tool.setTool(new Brush(ref.current, socket, params.id))
-
+      getStartImg()
 
       socket.onmessage = (e) => {
         const msg = JSON.parse(e.data)
@@ -45,7 +48,6 @@ const Canvas = observer(() => {
   }, [canvasContext.userName]);
 
   const draw = (data) => {
-    console.log(data)
     const figure = data.figure.type
     const ctx = canvasContext.canvas.getContext('2d')
     switch (figure) {
@@ -63,13 +65,37 @@ const Canvas = observer(() => {
     }
   }
 
+  const getStartImg = () => {
+    axiosInstance.get(`/images?id=${params.id}`)
+      .then(res => {
+        const img = res.data?.data
+        if(!img) return
+        setStartImg(img)
+      })
+  }
+  const setStartImg = (imgDataUrl) => {
+    const canvas = canvasContext.canvas
+    const ctx = canvas.getContext('2d')
+    const img = new Image();
+    img.src = imgDataUrl;
+
+    img.onload = function () {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    };
+  }
+
   const onMouseDown = () => {
     canvasContext.pushToUndoList(canvasContext.canvas.toDataURL())
   }
 
+  const onMouseUp = async () => {
+    axiosInstance.post(`/images?id=${canvasContext.sessionId}`, { img: canvasContext.canvas.toDataURL()})
+  }
+
   return (
     <Container className="vh-100 position-relative">
-      <canvas ref={ref} onMouseDown={onMouseDown}>Canvas</canvas>
+      <canvas ref={ref} onMouseDown={onMouseDown} onMouseUp={onMouseUp}>Canvas</canvas>
     </Container>
   );
 });
